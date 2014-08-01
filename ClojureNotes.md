@@ -8,8 +8,10 @@ Use compose more!!!!!
 
 - **apply** - `([f args] [f x args] [f x y args] [f x y z args] [f a b c d & args])`
 - **aset** - set the value in java array.
+- **assoc** - returns a new collection with the value at index / key updated.
 - **butlast**
 - **concat**
+- **contains?** - Tests a a map for the presence of a key regardless if its value is nil.
 - **comp** --  take a set of functions and return a function that is the composition of those functions
 - **comp** - Like thread first but not … research this
 - **compare** - returns -1 0 1 when comparing 2 data structures
@@ -17,8 +19,10 @@ Use compose more!!!!!
 - **conj** - Is different for list and vector, end of vector, front of list
 - **destructuring** - you know what this is.
 - **diff** - Recursively compares two data structures
+- **dissoc** - Returns a map with a key removed
 - **do** - Do 1 or several imperative things.  Useful when some other form only executes 1 form in a branch such as in (if)
 - **doseq** - iterate over a seq e.g something with a first and reset.  For x in xs do something side-effecty.
+- **drop** - Drops x amount of items from collection
 - **drop-while** - Drop from a sequence while a predicate is true.
 - **every?**
 - **false?**
@@ -28,6 +32,7 @@ Use compose more!!!!!
 - **for** - comprehension for things without side-effects
 - **frequencies**
 - **get** - looks up a keyed value in a collection
+- **get-in** - returns a value from a nested associative structure.
 - **group-by**
 - **hash-set** - Creates a set from multiple arguments
 - **identical?** - true when symbols are the same object
@@ -37,6 +42,7 @@ Use compose more!!!!!
 - **into-array** - makes a java / javascript array out of a vector
 - **iterate** - Returns a lazy sequence of x, (f x), (f (f x)) etc. f must be free of side-effects
 - **keep**
+- **Keys**
 - **last**
 - **list**
 - **map** - `([f coll] [f c1 c2] [f c1 c2 c3] [f c1 c2 c3 & colls])`:
@@ -45,6 +51,7 @@ Use compose more!!!!!
   	
   		Ex: (map list [1 2 3] [4 5 6]) ((1 4) (2 5) (3 6))
 - **mapcat**
+- **merge** - Combines maps.  If multiple maps contain a key.  Rightmost wins.
 - **merge-with** - merges two maps.  Uses a function to specify merge rule.
 - **next**
 - **not-every?**
@@ -62,6 +69,7 @@ Use compose more!!!!!
 - **ratio?**
 - **reduce** - like inject in ruby
 - **rem** - remainder
+- **remove** - returns a lazy sequence of the items in a coll for which pred returns false.l
 - **repeatedly**
 - **re-find** - like ruby match
 - **re-seq** - returns a lazy seq of all matches.
@@ -71,14 +79,17 @@ Use compose more!!!!!
 - **reverse**
 - **set** - Creates a set out of a collection (such as a sequence)
 - **select-key** - intersection of keys
+- **select-keys** - returns a map keeping only the keys passed in.
 - **sep**
 - **seq** - Returns a seq on a collection
 - **some**
 - **sort-by**
 - **split-at** - Splits a sequence at an index
 - **split-with** - Takes a predicate and splits the sequence into two collections.  Ones that satisfy the predicate and those that don't
+- **subvec** - Returns a sub vector of a vector
 - **take-while** - Take from a sequence while a predicate is true.
 - **true?**
+- **vals**
 - **vector** - Creates a vector from multiple arguments
 - **vec** - Creates a vector from a collection (such as a sequence)
 - **when-not** - like unless
@@ -138,9 +149,23 @@ and
 
 
 clojure.core and clojure.data are your friends
-• Break apart the problem to identify pure functions.• Learn the standard library so you can find functions already written. • Pour no concrete (use data as data).• Test inside out from the REPL.
+• Break apart the problem to identify pure functions.
+• Learn the standard library so you can find functions already written. • Pour no concrete (use data as data).
+• Test inside out from the REPL.
 
 The branch of math that deals with the different ways of forming patterns is called enumerative combinatorics.
+
+## Maps:
+- Are functions of their keys
+
+        ({:first "foo" :second "bar"} :first)
+        ; "foo"
+         
+## Keywords
+- Are functions.  They take collections as their argument and look themselves up
+
+        (:first {:first "foo" :second "bar"})
+        ; "foo"
 
 ## Sets:
 - Sets act as functions
