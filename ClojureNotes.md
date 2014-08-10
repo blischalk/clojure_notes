@@ -1,5 +1,11 @@
 # Clojure Notes
 
+## Use, Import, Require
+
+- **require** brings one or more quoted symbols or vectors of quoted symbols into the current namespace for use with fully qualified name.  If `as` option is used you can alias the longer namespace. `refer` option allows you to selectively choose which functions in the namespace to export.
+- **use** no longer required as `require` takes the refer option which essentially does the same thing.
+- **import** how you get at java code.
+
 
 ## Clojure: Methods to Remember
 
@@ -336,4 +342,22 @@ A transaction in clojure is remarked by dosync and is used to build a set of cha
 ### Vars:
 - Can be named and interned in a namespace.
 - Dynamic vars can provide thread-local state.
+
+
+## Web Notes:
+
+- Ring
+- Compojure
+- Liberator
+- Cheshire
+- lib-noir
+- clojure.data.jdbc
+- korma
+- clj-pdf
+- http-kit for websockets
+
+
+## New Workflow New Namespace
+
+
 
