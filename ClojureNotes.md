@@ -12,22 +12,26 @@
 
 Use compose more!!!!!
 
+- **alter** - used to read and update a ref
 - **apply** - `([f args] [f x args] [f x y args] [f x y z args] [f a b c d & args])`
 - **aset** - set the value in java array.
 - **assoc** - returns a new collection with the value at index / key updated.
 - **butlast**
-- **concat**
-- **contains?** - Tests a a map for the presence of a key regardless if its value is nil.
+- **commute** - similar to alter but STM can reorder commutes.
 - **comp** --  take a set of functions and return a function that is the composition of those functions
 - **comp** - Like thread first but not … research this
 - **compare** - returns -1 0 1 when comparing 2 data structures
 - **complement** - reverses truthy function.
+- **concat**
 - **conj** - Is different for list and vector, end of vector, front of list
+- **contains?** - Tests a a map for the presence of a key regardless if its value is nil.
+- **deref (@)** - Get the value of a mutable thing.
 - **destructuring** - you know what this is.
 - **diff** - Recursively compares two data structures
 - **dissoc** - Returns a map with a key removed
 - **do** - Do 1 or several imperative things.  Useful when some other form only executes 1 form in a branch such as in (if)
 - **doseq** - iterate over a seq e.g something with a first and reset.  For x in xs do something side-effecty.
+- **dosync** - Perform expressions within a transaction.
 - **drop** - Drops x amount of items from collection
 - **drop-while** - Drop from a sequence while a predicate is true.
 - **every?**
@@ -74,11 +78,14 @@ Use compose more!!!!!
 - **rational?**
 - **ratio?**
 - **reduce** - like inject in ruby
+- **ref-set** - sets the value of a ref
 - **rem** - remainder
 - **remove** - returns a lazy sequence of the items in a coll for which pred returns false.l
 - **repeatedly**
 - **re-find** - like ruby match
+- **reset** - Sets the value of an atom without regard for the previous value.
 - **re-seq** - returns a lazy seq of all matches.
+- **reset!** - Set the value of an atom.
 - **rseq** - Returns a reversed seq on a collection
 - **repeat**
 - **rest**
@@ -86,6 +93,8 @@ Use compose more!!!!!
 - **set** - Creates a set out of a collection (such as a sequence)
 - **select-key** - intersection of keys
 - **select-keys** - returns a map keeping only the keys passed in.
+- **send** - Function application for updating an agent.  Used when update action will not block.
+- **send-off** - Function application for updating an agent.  Used when the update action will block like writing to a file.  It will get its own thread pool.
 - **sep**
 - **seq** - Returns a seq on a collection
 - **some**
@@ -93,6 +102,7 @@ Use compose more!!!!!
 - **split-at** - Splits a sequence at an index
 - **split-with** - Takes a predicate and splits the sequence into two collections.  Ones that satisfy the predicate and those that don't
 - **subvec** - Returns a sub vector of a vector
+- **swap!** Function application on an atom for updating.
 - **take-while** - Take from a sequence while a predicate is true.
 - **true?**
 - **vals**
@@ -347,7 +357,8 @@ A transaction in clojure is remarked by dosync and is used to build a set of cha
 - Atom is Retriable
 - Var is Thread-local
 
-### Refs:
+### Refs: Great for coordinated access to shared state
+- Must be done within a transaction using `dosync`
 - Coordinated: reads and writes to multiple refs can be made in a way that guarantees no race conditions.
 - Asynchronous: the request to update is queued to happen in another thread some time later, while the thread that made the request continues immediately.
 - Retriable: the work done to update a reference’s value is speculative and may have to be repeated.
@@ -355,14 +366,19 @@ A transaction in clojure is remarked by dosync and is used to build a set of cha
 - @ or deref are used to access values of a reference type.
 - Use alter, ref-set, and commute to update the value within a ref
 
+
+### Atoms: Great for uncoordinated updates
+- Atoms are like refs in that they’re synchronous but like agents they are independent (uncoordinated).  They could be used to keep track of the currently playing track but if you wanted to update the current track and current composer in lock step you would use a ref. (you could also store track and composer as a map and then perform updates on that instead.)
+- Use reset! to update an atom
+- Use swap! to only update a part of an atom???
+
+
 ### Agents:
 - Each agent has a queue of actions that need to be performed on its value and each action will product a new value for the agent to hold and pass to subsequent action.
 - Update an agent using send or send-off.
 - Use send-off if the action does I/o or may block otherwise use send.
 - When agents fail they must be restarted.
 
-### Atoms:
-- Atoms are like refs in that they’re synchronous but like agents they are independent (uncoordinated).
 
 ### Vars:
 - Can be named and interned in a namespace.
@@ -371,15 +387,21 @@ A transaction in clojure is remarked by dosync and is used to build a set of cha
 
 ## Web Notes:
 
-- Ring
 - Compojure
-- Liberator
-- Cheshire
+- Ring
+- ring-middleware-json: Middleware to turn json body into params.
+- Liberator: Turns routes into resources. Uses a decision graph to determine response.
+- Cheshire: Parsing json
+- clojure.data.json: Manipulate json data
 - lib-noir
-- clojure.data.jdbc
-- korma
+	- session, cookies, redirection, crypt (password hashing)
+	- validation: Adds ability to validate params
+- clojure.data.jdbc: Database connector
+- korma: Database abstraction
 - clj-pdf
 - http-kit for websockets
+- hiccup: Clojure html templating
+
 
 
 ## New Workflow New Namespace
