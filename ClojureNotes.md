@@ -1,5 +1,9 @@
 # Clojure Notes
 
+## Conventions
+- Files / Directories named with underscores e.g my_file.clj
+- Namespace is referenced with hyphen e.g my-file.clj
+
 ## Use, Import, Require
 
 - **require** brings one or more quoted symbols or vectors of quoted symbols into the current namespace for use with fully qualified name.  If `as` option is used you can alias the longer namespace. `refer` option allows you to selectively choose which functions in the namespace to export.
