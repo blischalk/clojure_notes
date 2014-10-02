@@ -22,8 +22,7 @@ Use compose more!!!!!
 - **assoc** - returns a new collection with the value at index / key updated.
 - **butlast**
 - **commute** - similar to alter but STM can reorder commutes.
-- **comp** --  take a set of functions and return a function that is the composition of those functions
-- **comp** - Like thread first but not … research this
+- **comp** --  take a set of functions and return a function that is the composition of those functions.  This is different than threading which takes a value and threads it through different functions.  It can achieve a similar effect but since comp returns a function it can be passed around and reused.
 - **compare** - returns -1 0 1 when comparing 2 data structures
 - **complement** - reverses truthy function.
 - **concat**
@@ -62,9 +61,10 @@ Use compose more!!!!!
 - **map** - `([f coll] [f c1 c2] [f c1 c2 c3] [f c1 c2 c3 & colls])`:
   It is worth noting that when a single collection is given, map iterates over it while when
   multiple collections are given, it iterates over each collection executing on the first element of each collection, then the second argument of each collection, etc.
-  	
+  
   		Ex: (map list [1 2 3] [4 5 6]) ((1 4) (2 5) (3 6))
 - **mapcat**
+- **mapv** - Just like map only it returns a vector instead of a lazy sequence.
 - **merge** - Combines maps.  If multiple maps contain a key.  Rightmost wins.
 - **merge-with** - merges two maps.  Uses a function to specify merge rule.
 - **next**
