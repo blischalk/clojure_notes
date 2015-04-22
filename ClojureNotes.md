@@ -10,6 +10,22 @@
 - **use** no longer required as `require` takes the refer option which essentially does the same thing.
 - **import** how you get at java code.
 
+## Libraries to Remember
+
+- core.async
+- core.match
+- core.typed
+- prismatic.schema
+- specklj
+- midje
+- cheshire
+- core.logic
+- core.matrix
+- core.reducers
+- core.transducers
+- test.check
+
+
 
 ## Clojure: Methods to Remember
 
@@ -409,6 +425,56 @@ A transaction in clojure is remarked by dosync and is used to build a set of cha
 
 
 ## New Workflow New Namespace
+
+## ClojureScript
+
+### Getting Setup:
+
+- Add clojurescript to requires
+
+		`[org.clojure/clojurescript "0.0-2138"
+       		:exclusions [org.apache.ant/ant]]`
+       
+- Define clojure source path: `:source-paths ["src/clj"]`
+- Add leiningen plugin: `:plugins [[lein-cljsbuild "1.0.3"]]`
+- Specify build options:
+	
+		:cljsbuild {:builds [{:source-path "src/cljs"
+                        :compiler {:output-to "resources/public/brepl-hello.js"
+                                   :optimizations :whitespace
+                                   :pretty-print true}}]}
+                                   
+### Getting a bREPL
+                                   
+- Add `lein-ring` plugin to prevent having to start a Clojure REPL every time you start a server: `[lein-ring "0.8.10"]`
+- Add Compojure to deps `[compojure "1.2.1"]`
+- Add Ring-jetty to deps `[ring/ring-jetty-adapter "1.2.1"]`
+- Start a jetty server
+
+		(use 'ring.adapter.jetty)
+		(use 'compojure.route)
+		(run-jetty (resources "/") {:port 3000 :join? false})
+
+- Start the server component of the bREPL.  Do this in the Clojure REPL with:
+
+		(require 'cljs.repl)
+		(require 'cljs.repl.browser)
+		(cljs.repl/repl (cljs.repl.browser/repl-env))
+		
+- Connect to the server from the browser by requiring the browser repl library and running the connect function:
+
+		(ns hello-compiler.hello
+  			(:require [clojure.browser.repl :as repl]))
+  			
+  		(repl/connect "http://localhost:9000/repl")
+  		
+- Compile the project with `lein cljsbuild once`
+- Visit a page in the browser to make the connection
+
+`(repl/connect "http://localhost:9000/repl")` will start a bREPL for you
+
+
+
 
 
 
